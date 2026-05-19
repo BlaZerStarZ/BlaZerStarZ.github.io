@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Family Video</title>
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 2rem 1rem 3rem;
+        line-height: 1.4;
+      }
+      main {
+        max-width: 860px;
+        margin: 0 auto;
+      }
+      h1 {
+        margin-top: 0;
+      }
+      .card {
+        border: 1px solid #8884;
+        border-radius: 12px;
+        padding: 1rem;
+        margin-bottom: 1rem;
+      }
+      video {
+        width: 100%;
+        border-radius: 10px;
+        background: #000;
+      }
+      ol {
+        margin: 0.5rem 0 0;
+        padding-left: 1.25rem;
+      }
+      button {
+        border: 1px solid #8886;
+        border-radius: 8px;
+        background: transparent;
+        padding: 0.35rem 0.6rem;
+        cursor: pointer;
+      }
+      li {
+        margin: 0.35rem 0;
+      }
+      li button {
+        width: 100%;
+        text-align: left;
+      }
+      li.active button {
+        font-weight: 700;
+        border-color: #3b82f6;
+      }
+      .note {
+        font-size: 0.95rem;
+        opacity: 0.85;
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Grandson Video</h1>
+      <p class="note">Private family share page.</p>
+
+      <section class="card">
+        <h2>Video</h2>
+        <video id="familyVideo" controls preload="metadata">
+          <source src="assets/videos/grandson.mp4" type="video/mp4" />
+          Your browser does not support the video tag.
+        </video>
+      </section>
+
+      <section class="card">
+        <h2>Script Player</h2>
+        <p class="note">Click any line to jump to that part of the video.</p>
+        <ol id="scriptList"></ol>
+      </section>
+    </main>
+
+    <script>
+      const video = document.getElementById("familyVideo");
+      const scriptList = document.getElementById("scriptList");
+      const cues = [
+        { time: 0, text: "Wave hello to everyone!" },
+        { time: 6, text: "Show your favorite toy." },
+        { time: 13, text: "Say your big line from the play." },
+        { time: 21, text: "Big smile for grandma and grandpa!" },
+      ];
+
+      let activeIndex = -1;
+
+      function setActiveCue(index) {
+        if (index === activeIndex) return;
+        if (activeIndex >= 0) {
+          scriptList.children[activeIndex].classList.remove("active");
+        }
+        if (index >= 0) {
+          scriptList.children[index].classList.add("active");
+        }
+        activeIndex = index;
+      }
+
+      cues.forEach((cue, index) => {
+        const li = document.createElement("li");
+        const button = document.createElement("button");
+        button.type = "button";
+        button.textContent = `${new Date(cue.time * 1000).toISOString().slice(14, 19)} — ${cue.text}`;
+        button.addEventListener("click", () => {
+          video.currentTime = cue.time;
+          video.play();
+          setActiveCue(index);
+        });
+        li.appendChild(button);
+        scriptList.appendChild(li);
+      });
+
+      video.addEventListener("timeupdate", () => {
+        let nextActive = -1;
+        for (let i = 0; i < cues.length; i += 1) {
+          const current = cues[i];
+          const next = cues[i + 1];
+          if (video.currentTime >= current.time && (!next || video.currentTime < next.time)) {
+            nextActive = i;
+            break;
+          }
+        }
+        setActiveCue(nextActive);
+      });
+    </script>
+  </body>
+</html>
