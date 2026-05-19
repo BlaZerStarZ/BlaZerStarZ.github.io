@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>BlaZerStarZ · Coding like it's 1979</title>
+    <meta
+      name="description"
+      content="Retro-futurist portfolio landing page for BlaZerStarZ — coding like it's 1979 with modern polish."
+    />
+    <style>
+      :root {
+        --bg: #07050f;
+        --bg-soft: #121026;
+        --text: #ecf0ff;
+        --muted: #b6b1d1;
+        --hot-pink: #ff3cac;
+        --violet: #7a5cff;
+        --cyan: #13f4ff;
+        --lime: #90ff7a;
+        --surface: rgba(16, 15, 36, 0.6);
+        --border: rgba(255, 255, 255, 0.17);
+        --hero-gradient: radial-gradient(circle at 18% 18%, rgba(255, 60, 172, 0.22), transparent 42%),
+          radial-gradient(circle at 80% 8%, rgba(19, 244, 255, 0.2), transparent 38%),
+          radial-gradient(circle at 45% 85%, rgba(122, 92, 255, 0.24), transparent 46%),
+          linear-gradient(140deg, #080511, #140f2a 58%, #080511);
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        min-height: 100vh;
+        font-family: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+        color: var(--text);
+        background: var(--hero-gradient);
+        overflow-x: hidden;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.04) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+        pointer-events: none;
+        opacity: 0.15;
+        z-index: -1;
+      }
+
+      .stars,
+      .grid {
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        z-index: -2;
+      }
+
+      .stars {
+        background-image:
+          radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.9), transparent),
+          radial-gradient(2px 2px at 74% 20%, rgba(255, 255, 255, 0.7), transparent),
+          radial-gradient(1px 1px at 50% 70%, rgba(255, 255, 255, 0.65), transparent),
+          radial-gradient(2px 2px at 10% 85%, rgba(19, 244, 255, 0.8), transparent),
+          radial-gradient(1px 1px at 90% 78%, rgba(255, 60, 172, 0.7), transparent);
+        animation: drift 24s linear infinite;
+        opacity: 0.7;
+      }
+
+      .grid {
+        top: 52%;
+        background:
+          linear-gradient(to top, rgba(19, 244, 255, 0.36), transparent 58%),
+          repeating-linear-gradient(
+            to right,
+            rgba(19, 244, 255, 0.2),
+            rgba(19, 244, 255, 0.2) 1px,
+            transparent 1px,
+            transparent 60px
+          ),
+          repeating-linear-gradient(
+            to top,
+            rgba(19, 244, 255, 0.2),
+            rgba(19, 244, 255, 0.2) 1px,
+            transparent 1px,
+            transparent 42px
+          );
+        transform-origin: center bottom;
+        transform: perspective(500px) rotateX(65deg);
+        opacity: 0.25;
+      }
+
+      .skip-link {
+        position: absolute;
+        top: -100%;
+        left: 1rem;
+        background: #000;
+        color: #fff;
+        padding: 0.7rem 1rem;
+        border-radius: 0.5rem;
+        z-index: 40;
+      }
+
+      .skip-link:focus {
+        top: 1rem;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(14px);
+        background: rgba(7, 5, 15, 0.72);
+        border-bottom: 1px solid var(--border);
+      }
+
+      .shell {
+        width: min(1080px, 92vw);
+        margin: 0 auto;
+      }
+
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        padding: 0.9rem 0;
+      }
+
+      .brand {
+        font-weight: 700;
+        text-decoration: none;
+        color: var(--text);
+        letter-spacing: 0.08em;
+      }
+
+      nav ul {
+        margin: 0;
+        padding: 0;
+        display: flex;
+        gap: 0.35rem;
+        list-style: none;
+        flex-wrap: wrap;
+      }
+
+      nav a {
+        color: var(--muted);
+        text-decoration: none;
+        padding: 0.45rem 0.75rem;
+        border-radius: 999px;
+        transition: color 0.25s, background 0.25s;
+      }
+
+      nav a:hover,
+      nav a:focus-visible {
+        color: var(--text);
+        background: rgba(255, 255, 255, 0.08);
+      }
+
+      main {
+        padding-bottom: 4rem;
+      }
+
+      .hero {
+        min-height: min(80vh, 760px);
+        display: grid;
+        align-items: center;
+        padding: 4.8rem 0 2rem;
+      }
+
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.35rem 0.72rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.05);
+        color: #d8d6ea;
+        margin-bottom: 1.1rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        line-height: 1.1;
+        margin: 0;
+      }
+
+      h1 {
+        font-size: clamp(2.2rem, 8vw, 4.65rem);
+        text-wrap: balance;
+        margin-bottom: 1rem;
+        text-shadow: 0 6px 26px rgba(7, 5, 15, 0.72);
+      }
+
+      .hero-copy {
+        max-width: 700px;
+        padding: 1.35rem;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        border-radius: 1rem;
+        background: rgba(8, 8, 22, 0.36);
+        backdrop-filter: blur(4px);
+      }
+
+      .accent {
+        background: linear-gradient(90deg, var(--hot-pink), var(--cyan) 45%, var(--lime));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .lead {
+        color: #e8e4ff;
+        font-size: clamp(1rem, 2.5vw, 1.2rem);
+        line-height: 1.75;
+        max-width: 62ch;
+        margin-bottom: 1.7rem;
+        text-shadow: 0 2px 18px rgba(7, 5, 15, 0.85);
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.85rem;
+      }
+
+      .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.8rem;
+        border: 1px solid transparent;
+        padding: 0.76rem 1.15rem;
+        text-decoration: none;
+        font-weight: 600;
+        transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background-color 0.25s;
+      }
+
+      .button.primary {
+        color: #0a0718;
+        background: linear-gradient(120deg, var(--hot-pink), #ff67ce 28%, var(--cyan) 78%);
+        box-shadow: 0 8px 26px rgba(255, 60, 172, 0.32);
+      }
+
+      .button.secondary {
+        color: var(--text);
+        border-color: rgba(255, 255, 255, 0.2);
+        background: rgba(255, 255, 255, 0.04);
+      }
+
+      .button:hover,
+      .button:focus-visible {
+        transform: translateY(-2px);
+      }
+
+      .button.primary:hover,
+      .button.primary:focus-visible {
+        box-shadow: 0 12px 35px rgba(255, 60, 172, 0.42);
+      }
+
+      .button.secondary:hover,
+      .button.secondary:focus-visible {
+        border-color: rgba(255, 255, 255, 0.35);
+        background: rgba(255, 255, 255, 0.1);
+      }
+
+      .section {
+        margin-top: 4rem;
+        padding: 1.3rem;
+        border-radius: 1.1rem;
+        border: 1px solid var(--border);
+        background: var(--surface);
+        backdrop-filter: blur(7px);
+        box-shadow: 0 6px 35px rgba(0, 0, 0, 0.28);
+      }
+
+      .section h2 {
+        font-size: clamp(1.5rem, 4vw, 2.2rem);
+        margin-bottom: 0.75rem;
+      }
+
+      .section p {
+        color: #d4d1ec;
+        margin-top: 0;
+        line-height: 1.72;
+      }
+
+      .cards,
+      .chip-grid {
+        display: grid;
+        gap: 1rem;
+      }
+
+      .cards {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      }
+
+      .card {
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        border-radius: 0.9rem;
+        padding: 1rem;
+        background: rgba(5, 4, 14, 0.46);
+        transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      }
+
+      .card h3 {
+        margin-bottom: 0.55rem;
+        font-size: 1.1rem;
+      }
+
+      .card p {
+        margin-bottom: 0;
+        color: #d4d1ec;
+      }
+
+      .card:hover,
+      .card:focus-within {
+        transform: translateY(-4px);
+        border-color: rgba(255, 255, 255, 0.35);
+        box-shadow: 0 8px 28px rgba(19, 244, 255, 0.18);
+      }
+
+      .chip-grid {
+        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      }
+
+      .chip {
+        text-align: center;
+        padding: 0.65rem 0.5rem;
+        border-radius: 0.7rem;
+        border: 1px solid rgba(255, 255, 255, 0.16);
+        background: rgba(9, 8, 20, 0.6);
+        color: #f2efff;
+      }
+
+      footer {
+        margin-top: 3rem;
+        color: var(--muted);
+        text-align: center;
+        padding: 1.2rem 0 2.4rem;
+      }
+
+      [data-reveal] {
+        opacity: 0.86;
+        transform: translateY(10px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      [data-reveal].show {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      @keyframes drift {
+        from {
+          transform: translateY(0);
+        }
+        to {
+          transform: translateY(14px);
+        }
+      }
+
+      @media (max-width: 700px) {
+        .nav {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .hero {
+          padding-top: 3.2rem;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        html {
+          scroll-behavior: auto;
+        }
+
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+        }
+
+        [data-reveal] {
+          opacity: 1;
+          transform: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip-link" href="#content">Skip to content</a>
+    <div class="stars" aria-hidden="true"></div>
+    <div class="grid" aria-hidden="true"></div>
+
+    <header>
+      <div class="shell nav">
+        <a class="brand" href="#top">BlaZerStarZ</a>
+        <nav aria-label="Primary">
+          <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="content" class="shell">
+      <section class="hero" id="top">
+        <div class="hero-copy" data-reveal>
+          <div class="badge" aria-label="Tagline">✦ Coding like it's 1979!</div>
+          <h1>
+            Retro-futurist ideas,<br />
+            <span class="accent">modern web craftsmanship.</span>
+          </h1>
+          <p class="lead">
+            Welcome to a neon-drenched command deck where vintage computing spirit meets premium UI design.
+            Explore the projects, tools, and experiments built to make the web feel both timeless and next-generation.
+          </p>
+          <div class="cta-row">
+            <a class="button primary" href="#projects">View Work</a>
+            <a class="button secondary" href="#contact">Connect</a>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="about" data-reveal>
+        <h2>About</h2>
+        <p>
+          I build digital experiences that channel the wonder of early computing eras while staying sharp, fast,
+          and accessible for today. The goal: interfaces that feel cinematic, playful, and beautifully engineered.
+        </p>
+      </section>
+
+      <section class="section" id="projects" data-reveal>
+        <h2>Projects</h2>
+        <div class="cards">
+          <article class="card">
+            <h3>Neon Console UI</h3>
+            <p>Terminal-inspired components with polished animation and high-contrast visual clarity.</p>
+          </article>
+          <article class="card">
+            <h3>Signal Map</h3>
+            <p>An interactive visualization of data streams styled like a space-age control panel.</p>
+          </article>
+          <article class="card">
+            <h3>Orbit Portfolio</h3>
+            <p>A responsive showcase that pairs glassmorphism cards with colorful atmospheric gradients.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="skills" data-reveal>
+        <h2>Skills & Tech</h2>
+        <p>Design-forward engineering with a focus on smooth UX, frontend quality, and clean maintainable code.</p>
+        <div class="chip-grid" role="list" aria-label="Skills">
+          <span class="chip" role="listitem">HTML5</span>
+          <span class="chip" role="listitem">CSS3</span>
+          <span class="chip" role="listitem">JavaScript</span>
+          <span class="chip" role="listitem">GitHub Pages</span>
+          <span class="chip" role="listitem">Responsive UI</span>
+          <span class="chip" role="listitem">Accessibility</span>
+        </div>
+      </section>
+
+      <section class="section" id="contact" data-reveal>
+        <h2>Contact</h2>
+        <p>
+          Want to collaborate on something imaginative? Let's build an experience that feels like the future we were
+          promised.
+        </p>
+        <div class="cta-row">
+          <a class="button primary" href="https://github.com/BlaZerStarZ">GitHub</a>
+          <a class="button secondary" href="mailto:hello@example.com">Email</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <small>© <span id="year"></span> BlaZerStarZ · Crafted in retro-futurist style.</small>
+    </footer>
+
+    <script>
+      const year = document.getElementById("year");
+      if (year) {
+        year.textContent = String(new Date().getFullYear());
+      }
+
+      const revealNodes = document.querySelectorAll("[data-reveal]");
+      const prefersReducedMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const supportsObserver = "IntersectionObserver" in window;
+      if (!prefersReducedMotion && supportsObserver) {
+        const observer = new IntersectionObserver(
+          (entries, obs) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+                obs.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.16 }
+        );
+
+        revealNodes.forEach((node) => observer.observe(node));
+      } else {
+        revealNodes.forEach((node) => node.classList.add("show"));
+      }
+    </script>
+  </body>
+</html>
