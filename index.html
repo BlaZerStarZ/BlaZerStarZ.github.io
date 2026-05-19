@@ -139,10 +139,23 @@
       }
 
       .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
         font-weight: 700;
         text-decoration: none;
         color: var(--text);
         letter-spacing: 0.08em;
+      }
+
+      .brand-star {
+        display: inline-block;
+        color: var(--hot-pink);
+        text-shadow: 0 0 10px rgba(255, 60, 172, 0.6), 0 0 18px rgba(255, 60, 172, 0.35);
+        animation: badge-star-cycle var(--spin-duration, 5.6s) linear infinite,
+          brand-star-pulse var(--pulse-duration, 2.7s) ease-in-out infinite,
+          brand-star-spin var(--spin-duration, 5.6s) steps(var(--spin-steps, 9), end) infinite reverse;
+        transform-origin: center;
       }
 
       nav ul {
@@ -177,25 +190,6 @@
         display: grid;
         align-items: center;
         padding: 4.8rem 0 2rem;
-      }
-
-      .badge {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.45rem;
-        padding: 0.35rem 0.72rem;
-        border: 1px solid var(--border);
-        border-radius: 999px;
-        background: rgba(255, 255, 255, 0.05);
-        color: #d8d6ea;
-        margin-bottom: 1.1rem;
-      }
-
-      .badge-star {
-        display: inline-block;
-        color: var(--hot-pink);
-        text-shadow: 0 0 10px rgba(255, 60, 172, 0.6), 0 0 18px rgba(255, 60, 172, 0.35);
-        animation: badge-star-cycle 6s ease-in-out infinite, badge-star-pulse 2.8s ease-in-out infinite;
       }
 
       h1,
@@ -407,13 +401,22 @@
         }
       }
 
-      @keyframes badge-star-pulse {
+      @keyframes brand-star-pulse {
         0%,
         100% {
           transform: scale(1);
         }
         50% {
-          transform: scale(1.16);
+          transform: scale(1.14);
+        }
+      }
+
+      @keyframes brand-star-spin {
+        from {
+          rotate: 0deg;
+        }
+        to {
+          rotate: -360deg;
         }
       }
 
@@ -490,9 +493,10 @@
           transform: none;
         }
 
-        .badge-star {
+        .brand-star {
           color: var(--hot-pink);
           text-shadow: 0 0 10px rgba(255, 60, 172, 0.6);
+          transform: none;
         }
 
         .button.primary {
@@ -512,7 +516,11 @@
 
     <header>
       <div class="shell nav">
-        <a class="brand" href="#top">BlaZerStarZ</a>
+        <a class="brand" href="#top">
+          <span class="brand-star" aria-hidden="true">✦</span>
+          <span>BlaZerStarZ</span>
+          <span class="brand-star" aria-hidden="true">✦</span>
+        </a>
         <nav aria-label="Primary">
           <ul>
             <li><a href="#about">About</a></li>
@@ -527,7 +535,6 @@
     <main id="content" class="shell">
       <section class="hero" id="top">
         <div class="hero-copy" data-reveal>
-          <div class="badge" aria-label="Tagline"><span class="badge-star" aria-hidden="true">✦</span> Coding like it's 1979!</div>
           <h1>
             Retro-futurist ideas,<br />
             <span class="accent">modern web craftsmanship.</span>
@@ -624,6 +631,20 @@
         revealNodes.forEach((node) => observer.observe(node));
       } else {
         revealNodes.forEach((node) => node.classList.add("show"));
+      }
+
+      if (!prefersReducedMotion) {
+        const brandStars = document.querySelectorAll(".brand-star");
+
+        brandStars.forEach((star) => {
+          const spinDuration = (Math.random() * 4 + 2.8).toFixed(2);
+          const pulseDuration = (Math.random() * 2 + 1.8).toFixed(2);
+          const spinSteps = Math.floor(Math.random() * 10) + 6;
+
+          star.style.setProperty("--spin-duration", `${spinDuration}s`);
+          star.style.setProperty("--pulse-duration", `${pulseDuration}s`);
+          star.style.setProperty("--spin-steps", String(spinSteps));
+        });
       }
     </script>
   </body>
