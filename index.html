@@ -92,6 +92,13 @@
 
       let activeIndex = -1;
 
+      function formatCueTime(totalSeconds) {
+        const safeSeconds = Math.max(0, Math.floor(totalSeconds));
+        const minutes = Math.floor(safeSeconds / 60);
+        const seconds = safeSeconds % 60;
+        return `${minutes}:${String(seconds).padStart(2, "0")}`;
+      }
+
       function setActiveCue(index) {
         if (index === activeIndex) return;
         if (activeIndex >= 0) {
@@ -107,7 +114,7 @@
         const li = document.createElement("li");
         const button = document.createElement("button");
         button.type = "button";
-        button.textContent = `${new Date(cue.time * 1000).toISOString().slice(14, 19)} — ${cue.text}`;
+        button.textContent = `${formatCueTime(cue.time)} — ${cue.text}`;
         button.addEventListener("click", () => {
           video.currentTime = cue.time;
           video.play();
@@ -118,15 +125,20 @@
       });
 
       video.addEventListener("timeupdate", () => {
+        let low = 0;
+        let high = cues.length - 1;
         let nextActive = -1;
-        for (let i = 0; i < cues.length; i += 1) {
-          const current = cues[i];
-          const next = cues[i + 1];
-          if (video.currentTime >= current.time && (!next || video.currentTime < next.time)) {
-            nextActive = i;
-            break;
+
+        while (low <= high) {
+          const mid = Math.floor((low + high) / 2);
+          if (video.currentTime >= cues[mid].time) {
+            nextActive = mid;
+            low = mid + 1;
+          } else {
+            high = mid - 1;
           }
         }
+
         setActiveCue(nextActive);
       });
     </script>
