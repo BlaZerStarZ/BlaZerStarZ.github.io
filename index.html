@@ -67,7 +67,7 @@
 
       <section class="card">
         <h2>Video</h2>
-        <video id="familyVideo" controls preload="metadata" aria-label="Family video of grandson">
+        <video id="familyVideo" controls preload="metadata" aria-label="Family video of grandson" title="Family video of grandson" role="region">
           <source src="assets/videos/grandson.mp4" type="video/mp4" />
           Your browser does not support the video tag.
         </video>
@@ -117,7 +117,9 @@
         const li = document.createElement("li");
         const button = document.createElement("button");
         button.type = "button";
-        button.textContent = `${formatCueTime(cue.time)} — ${cue.text}`;
+        const cueTimeLabel = formatCueTime(cue.time);
+        button.textContent = `${cueTimeLabel} — ${cue.text}`;
+        button.setAttribute("aria-label", `Jump to ${cueTimeLabel} - ${cue.text}`);
         button.addEventListener("click", () => {
           video.currentTime = cue.time;
           video.play();
