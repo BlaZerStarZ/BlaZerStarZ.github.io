@@ -191,6 +191,12 @@
         margin-bottom: 1.1rem;
       }
 
+      .badge-star {
+        display: inline-block;
+        color: var(--hot-pink);
+        animation: badge-star-cycle 6s ease-in-out infinite;
+      }
+
       h1,
       h2,
       h3 {
@@ -372,6 +378,25 @@
         }
       }
 
+      @keyframes badge-star-cycle {
+        0% {
+          color: var(--hot-pink);
+          opacity: 0.8;
+        }
+        33% {
+          color: var(--cyan);
+          opacity: 1;
+        }
+        66% {
+          color: var(--lime);
+          opacity: 0.85;
+        }
+        100% {
+          color: var(--hot-pink);
+          opacity: 0.8;
+        }
+      }
+
       @media (max-width: 700px) {
         .nav {
           flex-direction: column;
@@ -400,6 +425,10 @@
           opacity: 1;
           transform: none;
         }
+
+        .badge-star {
+          color: var(--hot-pink);
+        }
       }
     </style>
   </head>
@@ -425,7 +454,7 @@
     <main id="content" class="shell">
       <section class="hero" id="top">
         <div class="hero-copy" data-reveal>
-          <div class="badge" aria-label="Tagline">✦ Coding like it's 1981!</div>
+          <div class="badge" aria-label="Tagline"><span class="badge-star" aria-hidden="true">✦</span> Coding like it's 1981!</div>
           <h1>
             Retro-futurist ideas,<br />
             <span class="accent">modern web craftsmanship.</span>
