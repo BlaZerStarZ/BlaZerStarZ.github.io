@@ -1,2 +1,2 @@
 # BlaZerStarZ.github.io
-Coding like it's 1981!
+Coding like it's 1927!
