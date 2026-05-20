@@ -3,27 +3,35 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>BlaZerStarZ · Coding like it's 1979</title>
+    <title>BlaZerStarZ · Systems, leverage, and compounding advantage</title>
     <meta
       name="description"
-      content="Retro-futurist portfolio landing page for BlaZerStarZ — coding like it's 1979 with modern polish."
+      content="BlaZerStarZ is a leverage-focused systems thinker building compounding engines, opportunity detection workflows, and practical operator-grade systems."
     />
     <style>
       :root {
-        --bg: #07050f;
-        --bg-soft: #121026;
-        --text: #ecf0ff;
-        --muted: #b6b1d1;
-        --hot-pink: #ff3cac;
-        --violet: #7a5cff;
-        --cyan: #13f4ff;
-        --lime: #90ff7a;
-        --surface: rgba(16, 15, 36, 0.6);
-        --border: rgba(255, 255, 255, 0.17);
-        --hero-gradient: radial-gradient(circle at 18% 18%, rgba(255, 60, 172, 0.22), transparent 42%),
-          radial-gradient(circle at 80% 8%, rgba(19, 244, 255, 0.2), transparent 38%),
-          radial-gradient(circle at 45% 85%, rgba(122, 92, 255, 0.24), transparent 46%),
-          linear-gradient(140deg, #080511, #140f2a 58%, #080511);
+        --bg: #06070d;
+        --bg-soft: #0d1020;
+        --panel: rgba(10, 14, 28, 0.72);
+        --panel-strong: rgba(13, 18, 36, 0.9);
+        --text: #edf2ff;
+        --muted: #9eabc9;
+        --muted-strong: #c9d3f0;
+        --line: rgba(255, 255, 255, 0.11);
+        --line-strong: rgba(255, 255, 255, 0.18);
+        --hot-pink: #ff4db8;
+        --violet: #8b6dff;
+        --cyan: #43e7ff;
+        --lime: #9dff9a;
+        --gold: #ffd66b;
+        --white-gold: #fff4c7;
+        --success: #7dffbf;
+        --danger: #ff8fb2;
+        --shadow: 0 18px 60px rgba(0, 0, 0, 0.38);
+        --hero-gradient: radial-gradient(circle at 16% 18%, rgba(255, 77, 184, 0.18), transparent 38%),
+          radial-gradient(circle at 84% 14%, rgba(67, 231, 255, 0.16), transparent 34%),
+          radial-gradient(circle at 50% 84%, rgba(139, 109, 255, 0.2), transparent 40%),
+          linear-gradient(160deg, #04050b 0%, #0b1020 48%, #05060d 100%);
       }
 
       * {
@@ -37,7 +45,7 @@
       body {
         margin: 0;
         min-height: 100vh;
-        font-family: "Segoe UI", "Inter", system-ui, -apple-system, sans-serif;
+        font-family: "Inter", "Segoe UI", system-ui, -apple-system, sans-serif;
         color: var(--text);
         background: var(--hero-gradient);
         overflow-x: hidden;
@@ -47,58 +55,65 @@
         content: "";
         position: fixed;
         inset: 0;
-        background: repeating-linear-gradient(
-          to bottom,
-          rgba(255, 255, 255, 0.04),
-          rgba(255, 255, 255, 0.04) 1px,
-          transparent 1px,
-          transparent 3px
-        );
+        background: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+        background-size: 100% 4px, 56px 100%;
         pointer-events: none;
-        opacity: 0.15;
-        z-index: -1;
+        opacity: 0.12;
+        z-index: -3;
       }
 
       .stars,
-      .grid {
+      .grid,
+      .glow-orb {
         position: fixed;
         inset: 0;
         pointer-events: none;
-        z-index: -2;
       }
 
       .stars {
+        z-index: -4;
         background-image:
-          radial-gradient(2px 2px at 20% 30%, rgba(255, 255, 255, 0.9), transparent),
-          radial-gradient(2px 2px at 74% 20%, rgba(255, 255, 255, 0.7), transparent),
-          radial-gradient(1px 1px at 50% 70%, rgba(255, 255, 255, 0.65), transparent),
-          radial-gradient(2px 2px at 10% 85%, rgba(19, 244, 255, 0.8), transparent),
-          radial-gradient(1px 1px at 90% 78%, rgba(255, 60, 172, 0.7), transparent);
-        animation: drift 24s linear infinite;
-        opacity: 0.7;
+          radial-gradient(2px 2px at 10% 16%, rgba(255, 255, 255, 0.95), transparent),
+          radial-gradient(2px 2px at 26% 72%, rgba(255, 243, 199, 0.78), transparent),
+          radial-gradient(1.5px 1.5px at 48% 28%, rgba(67, 231, 255, 0.8), transparent),
+          radial-gradient(1.5px 1.5px at 68% 66%, rgba(255, 77, 184, 0.72), transparent),
+          radial-gradient(2px 2px at 86% 18%, rgba(255, 255, 255, 0.92), transparent),
+          radial-gradient(1.5px 1.5px at 92% 82%, rgba(255, 214, 107, 0.8), transparent);
+        opacity: 0.84;
+        animation: starfield-drift 28s linear infinite;
       }
 
       .grid {
-        top: 52%;
+        z-index: -2;
+        top: 58%;
         background:
-          linear-gradient(to top, rgba(19, 244, 255, 0.36), transparent 58%),
+          linear-gradient(to top, rgba(67, 231, 255, 0.18), transparent 62%),
           repeating-linear-gradient(
             to right,
-            rgba(19, 244, 255, 0.2),
-            rgba(19, 244, 255, 0.2) 1px,
+            rgba(67, 231, 255, 0.12),
+            rgba(67, 231, 255, 0.12) 1px,
             transparent 1px,
-            transparent 60px
+            transparent 72px
           ),
           repeating-linear-gradient(
             to top,
-            rgba(19, 244, 255, 0.2),
-            rgba(19, 244, 255, 0.2) 1px,
+            rgba(67, 231, 255, 0.1),
+            rgba(67, 231, 255, 0.1) 1px,
             transparent 1px,
-            transparent 42px
+            transparent 48px
           );
         transform-origin: center bottom;
-        transform: perspective(500px) rotateX(65deg);
-        opacity: 0.25;
+        transform: perspective(760px) rotateX(72deg);
+        opacity: 0.22;
+      }
+
+      .glow-orb {
+        z-index: -5;
+        background: radial-gradient(circle at 20% 20%, rgba(255, 77, 184, 0.12), transparent 24%),
+          radial-gradient(circle at 80% 18%, rgba(67, 231, 255, 0.12), transparent 22%),
+          radial-gradient(circle at 50% 80%, rgba(255, 214, 107, 0.08), transparent 24%);
+        filter: blur(12px);
       }
 
       .skip-link {
@@ -107,9 +122,9 @@
         left: 1rem;
         background: #000;
         color: #fff;
-        padding: 0.7rem 1rem;
+        padding: 0.75rem 1rem;
         border-radius: 0.5rem;
-        z-index: 40;
+        z-index: 100;
       }
 
       .skip-link:focus {
@@ -119,14 +134,14 @@
       header {
         position: sticky;
         top: 0;
-        z-index: 10;
-        backdrop-filter: blur(14px);
-        background: rgba(7, 5, 15, 0.72);
-        border-bottom: 1px solid var(--border);
+        z-index: 20;
+        backdrop-filter: blur(20px);
+        background: rgba(5, 7, 13, 0.68);
+        border-bottom: 1px solid var(--line);
       }
 
       .shell {
-        width: min(1080px, 92vw);
+        width: min(1180px, 92vw);
         margin: 0 auto;
       }
 
@@ -141,42 +156,40 @@
       .brand {
         display: inline-flex;
         align-items: center;
-        gap: 0.55rem;
-        font-weight: 700;
+        gap: 0.6rem;
+        font-weight: 800;
         text-decoration: none;
         letter-spacing: 0.08em;
       }
 
       .brand-name {
-        display: inline-block;
         color: transparent;
         background-image: linear-gradient(
-          115deg,
+          110deg,
           rgba(255, 255, 255, 0.98) 0%,
-          rgba(255, 247, 186, 0.95) 12%,
-          rgba(255, 255, 255, 0.99) 24%,
-          rgba(255, 220, 120, 0.95) 38%,
-          rgba(255, 255, 255, 0.98) 50%,
-          rgba(19, 244, 255, 0.95) 64%,
-          rgba(255, 255, 255, 0.99) 78%,
-          rgba(255, 60, 172, 0.92) 90%,
-          rgba(255, 255, 255, 0.98) 100%
+          rgba(255, 244, 199, 0.98) 14%,
+          rgba(255, 255, 255, 0.99) 28%,
+          rgba(255, 214, 107, 0.95) 42%,
+          rgba(255, 255, 255, 0.98) 56%,
+          rgba(67, 231, 255, 0.9) 72%,
+          rgba(255, 255, 255, 0.98) 86%,
+          rgba(255, 77, 184, 0.92) 100%
         );
         background-size: 240% 100%;
-        background-position: 0% 50%;
         -webkit-background-clip: text;
         background-clip: text;
-        text-shadow: 0 0 10px rgba(255, 255, 255, 0.1), 0 0 22px rgba(255, 232, 155, 0.14);
-        animation: brand-color-scroll 7.5s linear infinite, brand-flicker 4.2s ease-in-out infinite;
+        text-shadow: 0 0 12px rgba(255, 255, 255, 0.08), 0 0 24px rgba(255, 214, 107, 0.12);
+        animation: brand-color-scroll 8s linear infinite, brand-flicker 4.4s ease-in-out infinite;
       }
 
       .brand-star {
         display: inline-block;
-        color: var(--hot-pink);
-        text-shadow: 0 0 10px rgba(255, 60, 172, 0.6), 0 0 18px rgba(255, 60, 172, 0.35);
-        animation: badge-star-cycle var(--spin-duration, 5.6s) linear infinite,
-          brand-star-pulse var(--pulse-duration, 2.7s) ease-in-out infinite,
-          brand-star-spin var(--spin-duration, 5.6s) cubic-bezier(0.42, 0, 0.2, 1) infinite reverse;
+        font-size: 0.95rem;
+        color: var(--gold);
+        text-shadow: 0 0 10px rgba(255, 214, 107, 0.4), 0 0 18px rgba(67, 231, 255, 0.18);
+        animation: badge-star-cycle var(--spin-duration, 4.6s) linear infinite,
+          brand-star-pulse var(--pulse-duration, 2.6s) ease-in-out infinite,
+          brand-star-spin var(--spin-duration, 4.6s) linear infinite reverse;
         transform-origin: center;
         will-change: transform, filter, color;
       }
@@ -185,7 +198,7 @@
         margin: 0;
         padding: 0;
         display: flex;
-        gap: 0.35rem;
+        gap: 0.4rem;
         list-style: none;
         flex-wrap: wrap;
       }
@@ -193,65 +206,124 @@
       nav a {
         color: var(--muted);
         text-decoration: none;
-        padding: 0.45rem 0.75rem;
+        padding: 0.5rem 0.8rem;
         border-radius: 999px;
-        transition: color 0.25s, background 0.25s;
+        transition: color 0.25s ease, background 0.25s ease, border-color 0.25s ease;
+        border: 1px solid transparent;
       }
 
       nav a:hover,
       nav a:focus-visible {
         color: var(--text);
-        background: rgba(255, 255, 255, 0.08);
+        background: rgba(255, 255, 255, 0.05);
+        border-color: rgba(255, 255, 255, 0.08);
       }
 
       main {
-        padding-bottom: 4rem;
+        padding-bottom: 5rem;
       }
 
       .hero {
-        min-height: min(80vh, 760px);
+        min-height: min(92vh, 960px);
         display: grid;
         align-items: center;
-        padding: 4.8rem 0 2rem;
+        padding: 5.8rem 0 2.5rem;
+      }
+
+      .hero-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(300px, 0.9fr);
+        gap: 1.5rem;
+        align-items: stretch;
+      }
+
+      .hero-copy,
+      .hero-panel,
+      .section,
+      .signal-card,
+      .principle,
+      .operator-card,
+      .quote-card {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        border-radius: 1.2rem;
+        backdrop-filter: blur(10px);
+        box-shadow: var(--shadow);
+      }
+
+      .hero-copy {
+        padding: 1.5rem;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0.38rem 0.8rem;
+        border-radius: 999px;
+        border: 1px solid var(--line-strong);
+        color: var(--muted-strong);
+        background: rgba(255, 255, 255, 0.04);
+        margin-bottom: 1rem;
+        font-size: 0.92rem;
+      }
+
+      .eyebrow .dot {
+        width: 0.55rem;
+        height: 0.55rem;
+        border-radius: 50%;
+        background: linear-gradient(135deg, var(--gold), var(--cyan));
+        box-shadow: 0 0 12px rgba(255, 214, 107, 0.45);
       }
 
       h1,
       h2,
-      h3 {
-        line-height: 1.1;
+      h3,
+      h4 {
+        line-height: 1.08;
         margin: 0;
       }
 
       h1 {
-        font-size: clamp(2.2rem, 8vw, 4.65rem);
-        text-wrap: balance;
+        font-size: clamp(2.8rem, 8vw, 5.3rem);
         margin-bottom: 1rem;
-        text-shadow: 0 6px 26px rgba(7, 5, 15, 0.72);
+        letter-spacing: -0.04em;
+        text-wrap: balance;
       }
 
-      .hero-copy {
-        max-width: 700px;
-        padding: 1.35rem;
-        border: 1px solid rgba(255, 255, 255, 0.14);
-        border-radius: 1rem;
-        background: rgba(8, 8, 22, 0.36);
-        backdrop-filter: blur(4px);
-      }
-
-      .accent {
-        background: linear-gradient(90deg, var(--hot-pink), var(--cyan) 45%, var(--lime));
+      .hero-title-accent {
+        color: transparent;
+        background: linear-gradient(90deg, var(--white-gold), var(--gold) 26%, var(--cyan) 62%, var(--hot-pink));
         -webkit-background-clip: text;
         background-clip: text;
-        color: transparent;
       }
 
       .lead {
-        color: #e8e4ff;
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
-        line-height: 1.75;
-        max-width: 62ch;
-        margin-bottom: 1.7rem;
-        text-shadow: 0 2px 18px rgba(7, 5, 15, 0.85);
+        color: var(--muted-strong);
+        font-size: clamp(1.04rem, 2.4vw, 1.22rem);
+        line-height: 1.78;
+        max-width: 64ch;
+        margin-bottom: 1.6rem;
+      }
+
+      .hero-list {
+        display: grid;
+        gap: 0.75rem;
+        margin: 0 0 1.7rem;
+        padding: 0;
+        list-style: none;
+      }
+
+      .hero-list li {
+        display: grid;
+        grid-template-columns: 1.1rem 1fr;
+        gap: 0.7rem;
+        color: var(--muted-strong);
+      }
+
+      .hero-list li::before {
+        content: "✦";
+        color: var(--gold);
       }
 
       .cta-row {
@@ -264,28 +336,30 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 0.8rem;
+        gap: 0.55rem;
+        min-height: 48px;
+        border-radius: 0.9rem;
         border: 1px solid transparent;
-        padding: 0.76rem 1.15rem;
+        padding: 0.82rem 1.2rem;
         text-decoration: none;
-        font-weight: 600;
-        transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background-color 0.25s;
+        font-weight: 700;
+        transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
       }
 
       .button.primary {
-        color: #0a0718;
-        background: linear-gradient(120deg, var(--hot-pink), #ff67ce 28%, var(--cyan) 78%);
+        color: #08101c;
+        background: linear-gradient(120deg, var(--gold), var(--white-gold) 24%, var(--cyan) 78%);
         background-size: 200% 200%;
-        box-shadow: 0 8px 26px rgba(255, 60, 172, 0.32);
-        animation: button-primary-cycle 6s ease-in-out infinite, button-primary-pulse 3.2s ease-in-out infinite;
+        box-shadow: 0 10px 28px rgba(255, 214, 107, 0.24);
+        animation: button-primary-cycle 7s ease-in-out infinite, button-primary-pulse 3.6s ease-in-out infinite;
       }
 
       .button.secondary {
         color: var(--text);
-        border-color: rgba(255, 255, 255, 0.2);
+        border-color: rgba(255, 255, 255, 0.18);
         background: rgba(255, 255, 255, 0.04);
-        box-shadow: 0 0 0 rgba(19, 244, 255, 0);
-        animation: button-secondary-pulse 3.8s ease-in-out infinite;
+        box-shadow: 0 0 0 rgba(67, 231, 255, 0);
+        animation: button-secondary-pulse 4.4s ease-in-out infinite;
       }
 
       .button:hover,
@@ -293,97 +367,206 @@
         transform: translateY(-2px);
       }
 
-      .button.primary:hover,
-      .button.primary:focus-visible {
-        box-shadow: 0 12px 35px rgba(255, 60, 172, 0.42);
-      }
-
       .button.secondary:hover,
       .button.secondary:focus-visible {
-        border-color: rgba(255, 255, 255, 0.35);
-        background: rgba(255, 255, 255, 0.1);
-        box-shadow: 0 0 18px rgba(19, 244, 255, 0.22);
+        background: rgba(255, 255, 255, 0.08);
+        border-color: rgba(255, 255, 255, 0.26);
+      }
+
+      .hero-panel {
+        padding: 1.25rem;
+        display: grid;
+        gap: 1rem;
+        background: linear-gradient(180deg, rgba(10, 14, 28, 0.88), rgba(10, 14, 28, 0.68));
+      }
+
+      .panel-label {
+        font-size: 0.8rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .metrics {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.85rem;
+      }
+
+      .metric {
+        padding: 1rem;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.035);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .metric strong {
+        display: block;
+        font-size: 1.8rem;
+        margin-bottom: 0.35rem;
+        color: var(--white-gold);
+      }
+
+      .metric span {
+        color: var(--muted);
+        line-height: 1.45;
+      }
+
+      .signal-board {
+        display: grid;
+        gap: 0.8rem;
+      }
+
+      .signal-card {
+        padding: 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        box-shadow: none;
+      }
+
+      .signal-card h3 {
+        font-size: 1rem;
+        margin-bottom: 0.45rem;
+      }
+
+      .signal-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.55;
       }
 
       .section {
-        margin-top: 4rem;
-        padding: 1.3rem;
-        border-radius: 1.1rem;
-        border: 1px solid var(--border);
-        background: var(--surface);
-        backdrop-filter: blur(7px);
-        box-shadow: 0 6px 35px rgba(0, 0, 0, 0.28);
+        margin-top: 1.3rem;
+        padding: 1.4rem;
+      }
+
+      .section-header {
+        display: grid;
+        gap: 0.5rem;
+        margin-bottom: 1.15rem;
+      }
+
+      .section-kicker {
+        font-size: 0.8rem;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--cyan);
       }
 
       .section h2 {
-        font-size: clamp(1.5rem, 4vw, 2.2rem);
-        margin-bottom: 0.75rem;
+        font-size: clamp(1.55rem, 3.6vw, 2.5rem);
       }
 
       .section p {
-        color: #d4d1ec;
-        margin-top: 0;
-        line-height: 1.72;
+        color: var(--muted-strong);
+        line-height: 1.75;
+        margin: 0;
       }
 
-      .cards,
-      .chip-grid {
+      .principles-grid,
+      .operators-grid,
+      .systems-grid,
+      .stack-grid,
+      .contact-grid {
         display: grid;
         gap: 1rem;
       }
 
-      .cards {
-        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      .principles-grid {
+        grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
       }
 
-      .card {
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        border-radius: 0.9rem;
-        padding: 1rem;
-        background: rgba(5, 4, 14, 0.46);
-        transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+      .principle,
+      .operator-card,
+      .quote-card {
+        padding: 1.1rem;
       }
 
-      .card h3 {
+      .principle h3,
+      .operator-card h3 {
+        font-size: 1.05rem;
         margin-bottom: 0.55rem;
-        font-size: 1.1rem;
       }
 
-      .card p {
-        margin-bottom: 0;
-        color: #d4d1ec;
+      .principle p,
+      .operator-card p,
+      .quote-card p {
+        color: var(--muted);
       }
 
-      .card:hover,
-      .card:focus-within {
-        transform: translateY(-4px);
-        border-color: rgba(255, 255, 255, 0.35);
-        box-shadow: 0 8px 28px rgba(19, 244, 255, 0.18);
+      .operator-card ul,
+      .systems-list,
+      .contact-list {
+        margin: 0.8rem 0 0;
+        padding-left: 1rem;
+        color: var(--muted-strong);
       }
 
-      .chip-grid {
-        grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+      .operator-card li,
+      .systems-list li,
+      .contact-list li {
+        margin-bottom: 0.45rem;
+        line-height: 1.55;
+      }
+
+      .systems-grid {
+        grid-template-columns: 1.2fr 0.8fr;
+      }
+
+      .systems-panel {
+        padding: 1.15rem;
+        border-radius: 1rem;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .systems-panel h3 {
+        margin-bottom: 0.7rem;
+      }
+
+      .quote-card {
+        background: linear-gradient(180deg, rgba(255, 214, 107, 0.08), rgba(67, 231, 255, 0.05));
+      }
+
+      .quote-card blockquote {
+        margin: 0;
+        font-size: 1.12rem;
+        line-height: 1.75;
+        color: var(--white-gold);
+      }
+
+      .stack-grid {
+        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
       }
 
       .chip {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 54px;
         text-align: center;
-        padding: 0.65rem 0.5rem;
-        border-radius: 0.7rem;
-        border: 1px solid rgba(255, 255, 255, 0.16);
-        background: rgba(9, 8, 20, 0.6);
-        color: #f2efff;
+        padding: 0.8rem 0.7rem;
+        border-radius: 0.85rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr auto;
+        align-items: end;
       }
 
       footer {
-        margin-top: 3rem;
+        margin-top: 2rem;
         color: var(--muted);
         text-align: center;
-        padding: 1.2rem 0 2.4rem;
+        padding: 1.1rem 0 2.4rem;
       }
 
       [data-reveal] {
-        opacity: 0.86;
-        transform: translateY(10px);
+        opacity: 0.84;
+        transform: translateY(12px);
         transition: opacity 0.7s ease, transform 0.7s ease;
       }
 
@@ -392,12 +575,12 @@
         transform: translateY(0);
       }
 
-      @keyframes drift {
+      @keyframes starfield-drift {
         from {
           transform: translateY(0);
         }
         to {
-          transform: translateY(14px);
+          transform: translateY(18px);
         }
       }
 
@@ -414,58 +597,40 @@
         0%,
         100% {
           filter: brightness(0.98) saturate(1);
-          text-shadow: 0 0 10px rgba(255, 255, 255, 0.08), 0 0 22px rgba(255, 232, 155, 0.12);
+          text-shadow: 0 0 10px rgba(255, 255, 255, 0.08), 0 0 22px rgba(255, 214, 107, 0.12);
         }
-        12% {
-          filter: brightness(1.06) saturate(1.05);
-          text-shadow: 0 0 12px rgba(255, 255, 255, 0.11), 0 0 26px rgba(255, 243, 195, 0.16);
+        18% {
+          filter: brightness(1.06) saturate(1.04);
         }
-        27% {
-          filter: brightness(0.94) saturate(0.98);
+        42% {
+          filter: brightness(0.95) saturate(0.98);
         }
-        43% {
-          filter: brightness(1.08) saturate(1.08);
-          text-shadow: 0 0 14px rgba(255, 255, 255, 0.12), 0 0 28px rgba(255, 221, 138, 0.18);
-        }
-        58% {
-          filter: brightness(0.97) saturate(1.02);
-        }
-        76% {
-          filter: brightness(1.1) saturate(1.06);
-          text-shadow: 0 0 13px rgba(255, 255, 255, 0.12), 0 0 26px rgba(19, 244, 255, 0.14);
+        74% {
+          filter: brightness(1.08) saturate(1.06);
+          text-shadow: 0 0 13px rgba(255, 255, 255, 0.12), 0 0 28px rgba(67, 231, 255, 0.14);
         }
       }
 
       @keyframes badge-star-cycle {
         0% {
-          color: var(--hot-pink);
-          opacity: 0.82;
-          text-shadow: 0 0 10px rgba(255, 60, 172, 0.65), 0 0 22px rgba(255, 60, 172, 0.38);
+          color: var(--gold);
+          text-shadow: 0 0 12px rgba(255, 214, 107, 0.55), 0 0 20px rgba(255, 214, 107, 0.25);
         }
-        20% {
-          color: #fff7c0;
-          opacity: 0.96;
-          text-shadow: 0 0 12px rgba(255, 247, 192, 0.7), 0 0 24px rgba(255, 247, 192, 0.42);
-        }
-        40% {
-          color: var(--cyan);
-          opacity: 1;
-          text-shadow: 0 0 12px rgba(19, 244, 255, 0.7), 0 0 24px rgba(19, 244, 255, 0.42);
-        }
-        65% {
-          color: var(--lime);
-          opacity: 0.92;
-          text-shadow: 0 0 12px rgba(144, 255, 122, 0.65), 0 0 24px rgba(144, 255, 122, 0.35);
-        }
-        82% {
+        25% {
           color: rgba(255, 255, 255, 0.98);
-          opacity: 0.98;
-          text-shadow: 0 0 13px rgba(255, 255, 255, 0.72), 0 0 25px rgba(255, 255, 255, 0.36);
+          text-shadow: 0 0 12px rgba(255, 255, 255, 0.6), 0 0 22px rgba(255, 255, 255, 0.22);
+        }
+        50% {
+          color: var(--cyan);
+          text-shadow: 0 0 12px rgba(67, 231, 255, 0.58), 0 0 22px rgba(67, 231, 255, 0.24);
+        }
+        75% {
+          color: var(--hot-pink);
+          text-shadow: 0 0 12px rgba(255, 77, 184, 0.52), 0 0 22px rgba(255, 77, 184, 0.22);
         }
         100% {
-          color: var(--hot-pink);
-          opacity: 0.82;
-          text-shadow: 0 0 10px rgba(255, 60, 172, 0.65), 0 0 22px rgba(255, 60, 172, 0.38);
+          color: var(--gold);
+          text-shadow: 0 0 12px rgba(255, 214, 107, 0.55), 0 0 20px rgba(255, 214, 107, 0.25);
         }
       }
 
@@ -476,7 +641,7 @@
           filter: brightness(0.98);
         }
         50% {
-          transform: scale(1.12);
+          transform: scale(1.1);
           filter: brightness(1.08);
         }
       }
@@ -493,22 +658,15 @@
       @keyframes button-primary-cycle {
         0% {
           background-position: 0% 50%;
-          box-shadow: 0 8px 26px rgba(255, 60, 172, 0.32), 0 0 18px rgba(255, 60, 172, 0.24);
+          box-shadow: 0 10px 28px rgba(255, 214, 107, 0.22), 0 0 18px rgba(67, 231, 255, 0.12);
         }
-        33% {
-          background: linear-gradient(120deg, var(--cyan), #86fbff 30%, var(--lime) 78%);
-          background-position: 50% 50%;
-          box-shadow: 0 8px 26px rgba(19, 244, 255, 0.28), 0 0 20px rgba(19, 244, 255, 0.24);
-        }
-        66% {
-          background: linear-gradient(120deg, var(--lime), #dbff8b 30%, var(--hot-pink) 78%);
+        50% {
           background-position: 100% 50%;
-          box-shadow: 0 8px 26px rgba(144, 255, 122, 0.24), 0 0 18px rgba(144, 255, 122, 0.2);
+          box-shadow: 0 10px 28px rgba(67, 231, 255, 0.2), 0 0 18px rgba(255, 214, 107, 0.16);
         }
         100% {
-          background: linear-gradient(120deg, var(--hot-pink), #ff67ce 28%, var(--cyan) 78%);
           background-position: 0% 50%;
-          box-shadow: 0 8px 26px rgba(255, 60, 172, 0.32), 0 0 18px rgba(255, 60, 172, 0.24);
+          box-shadow: 0 10px 28px rgba(255, 214, 107, 0.22), 0 0 18px rgba(67, 231, 255, 0.12);
         }
       }
 
@@ -518,19 +676,25 @@
           transform: scale(1);
         }
         50% {
-          transform: scale(1.03);
+          transform: scale(1.02);
         }
       }
 
       @keyframes button-secondary-pulse {
         0%,
         100% {
-          box-shadow: 0 0 0 rgba(19, 244, 255, 0), 0 0 0 rgba(122, 92, 255, 0);
-          border-color: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 0 0 rgba(67, 231, 255, 0), 0 0 0 rgba(255, 214, 107, 0);
         }
         50% {
-          box-shadow: 0 0 14px rgba(19, 244, 255, 0.18), 0 0 24px rgba(122, 92, 255, 0.12);
-          border-color: rgba(255, 255, 255, 0.28);
+          box-shadow: 0 0 16px rgba(67, 231, 255, 0.16), 0 0 24px rgba(255, 214, 107, 0.1);
+        }
+      }
+
+      @media (max-width: 920px) {
+        .hero-layout,
+        .systems-grid,
+        .contact-grid {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -541,7 +705,11 @@
         }
 
         .hero {
-          padding-top: 3.2rem;
+          padding-top: 4rem;
+        }
+
+        .metrics {
+          grid-template-columns: 1fr;
         }
       }
 
@@ -571,24 +739,17 @@
         }
 
         .brand-star {
-          color: var(--hot-pink);
-          text-shadow: 0 0 10px rgba(255, 60, 172, 0.6);
+          color: var(--gold);
+          text-shadow: 0 0 10px rgba(255, 214, 107, 0.4);
           transform: none;
           filter: none;
-        }
-
-        .button.primary {
-          background: linear-gradient(120deg, var(--hot-pink), #ff67ce 28%, var(--cyan) 78%);
-        }
-
-        .button.secondary {
-          box-shadow: none;
         }
       }
     </style>
   </head>
   <body>
     <a class="skip-link" href="#content">Skip to content</a>
+    <div class="glow-orb" aria-hidden="true"></div>
     <div class="stars" aria-hidden="true"></div>
     <div class="grid" aria-hidden="true"></div>
 
@@ -601,9 +762,10 @@
         </a>
         <nav aria-label="Primary">
           <ul>
-            <li><a href="#about">About</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#skills">Skills</a></li>
+            <li><a href="#thesis">Thesis</a></li>
+            <li><a href="#systems">Systems</a></li>
+            <li><a href="#operator">Operator Profile</a></li>
+            <li><a href="#stack">Stack</a></li>
             <li><a href="#contact">Contact</a></li>
           </ul>
         </nav>
@@ -612,76 +774,218 @@
 
     <main id="content" class="shell">
       <section class="hero" id="top">
-        <div class="hero-copy" data-reveal>
-          <h1>
-            Retro-futurist ideas,<br />
-            <span class="accent">modern web craftsmanship.</span>
-          </h1>
-          <p class="lead">
-            Welcome to a neon-drenched command deck where vintage computing spirit meets premium UI design.
-            Explore the projects, tools, and experiments built to make the web feel both timeless and next-generation.
-          </p>
-          <div class="cta-row">
-            <a class="button primary" href="#projects">View Work</a>
-            <a class="button secondary" href="#contact">Connect</a>
+        <div class="hero-layout">
+          <div class="hero-copy" data-reveal>
+            <div class="eyebrow"><span class="dot" aria-hidden="true"></span> Systems thinker · leverage operator · pattern analyst</div>
+            <h1>
+              I engineer <span class="hero-title-accent">compounding systems</span>, not one-off wins.
+            </h1>
+            <p class="lead">
+              I think in mechanisms, bottlenecks, incentives, and asymmetric upside. My work lives at the intersection of
+              systems design, market signal detection, automation, behavioral leverage, and operator-grade execution.
+            </p>
+            <ul class="hero-list">
+              <li>Deconstruct outcomes into reusable engines instead of isolated tactics.</li>
+              <li>Detect hidden incentives, emerging signals, and leverage points before they become obvious.</li>
+              <li>Translate ambiguity into frameworks, workflows, and practical compounding advantage.</li>
+            </ul>
+            <div class="cta-row">
+              <a class="button primary" href="#systems">View operating model</a>
+              <a class="button secondary" href="#contact">Start a conversation</a>
+            </div>
+          </div>
+
+          <aside class="hero-panel" data-reveal aria-label="Operator dashboard">
+            <div>
+              <div class="panel-label">Operator dashboard</div>
+            </div>
+            <div class="metrics">
+              <div class="metric">
+                <strong>Systems</strong>
+                <span>Builds engines, workflows, and repeatable mechanisms with compounding value.</span>
+              </div>
+              <div class="metric">
+                <strong>Signals</strong>
+                <span>Scans for hidden incentives, market shifts, and high-probability directional edges.</span>
+              </div>
+              <div class="metric">
+                <strong>Leverage</strong>
+                <span>Optimizes for throughput, asymmetry, automation, and return on effort.</span>
+              </div>
+              <div class="metric">
+                <strong>Execution</strong>
+                <span>Prioritizes precision, utility, and outcomes over performance or fluff.</span>
+              </div>
+            </div>
+            <div class="signal-board">
+              <div class="signal-card">
+                <h3>Pattern recognition</h3>
+                <p>Connects SEO, AI, psychology, monetization, and product thinking into unified models.</p>
+              </div>
+              <div class="signal-card">
+                <h3>Opportunity detection</h3>
+                <p>Looks for what others miss before it hardens into consensus.</p>
+              </div>
+              <div class="signal-card">
+                <h3>Practical outcomes</h3>
+                <p>Ranks decisions by implementation reality, profitability, and strategic usefulness.</p>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="thesis" data-reveal>
+        <div class="section-header">
+          <div class="section-kicker">Core thesis</div>
+          <h2>High-agency systems thinking with a bias toward leverage.</h2>
+        </div>
+        <p>
+          I do not optimize for activity. I optimize for mechanisms that create reliable outcomes: stronger positioning,
+          cleaner workflows, asymmetric upside, and systems that continue producing value after the initial build.
+        </p>
+      </section>
+
+      <section class="section" id="principles" data-reveal>
+        <div class="section-header">
+          <div class="section-kicker">Decision principles</div>
+          <h2>The principles behind how I work.</h2>
+        </div>
+        <div class="principles-grid">
+          <article class="principle">
+            <h3>Systems over tasks</h3>
+            <p>I ask what mechanism repeatedly creates the outcome, then design around that engine.</p>
+          </article>
+          <article class="principle">
+            <h3>Signal over noise</h3>
+            <p>I search for weak signals, hidden incentives, and directional indicators before they become obvious.</p>
+          </article>
+          <article class="principle">
+            <h3>Utility over performance</h3>
+            <p>I value specificity, proof, ranking, and implementation reality over vague polish or motivational filler.</p>
+          </article>
+          <article class="principle">
+            <h3>Compounding over novelty</h3>
+            <p>I prefer workflows and assets that keep paying dividends instead of isolated short-term wins.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="systems" data-reveal>
+        <div class="section-header">
+          <div class="section-kicker">Operating model</div>
+          <h2>How I engineer outcomes.</h2>
+        </div>
+        <div class="systems-grid">
+          <div class="systems-panel">
+            <h3>System architecture</h3>
+            <ul class="systems-list">
+              <li>Map incentives, bottlenecks, constraints, and throughput across the full system.</li>
+              <li>Identify leverage points where small interventions create outsized results.</li>
+              <li>Design reusable workflows, automation loops, and decision frameworks.</li>
+              <li>Translate abstract strategy into operational sequences with measurable outputs.</li>
+            </ul>
+          </div>
+          <div class="quote-card">
+            <blockquote>
+              “I don’t interact like someone casually consuming information. I interact like someone trying to engineer outcomes.”
+            </blockquote>
           </div>
         </div>
       </section>
 
-      <section class="section" id="about" data-reveal>
-        <h2>About</h2>
-        <p>
-          I build digital experiences that channel the wonder of early computing eras while staying sharp, fast,
-          and accessible for today. The goal: interfaces that feel cinematic, playful, and beautifully engineered.
-        </p>
-      </section>
-
-      <section class="section" id="projects" data-reveal>
-        <h2>Projects</h2>
-        <div class="cards">
-          <article class="card">
-            <h3>Neon Console UI</h3>
-            <p>Terminal-inspired components with polished animation and high-contrast visual clarity.</p>
+      <section class="section" id="operator" data-reveal>
+        <div class="section-header">
+          <div class="section-kicker">Operator profile</div>
+          <h2>Builder-strategist, pattern extractor, leverage architect.</h2>
+        </div>
+        <div class="principles-grid">
+          <article class="operator-card">
+            <h3>Builder-strategist hybrid</h3>
+            <p>I connect domains that usually stay siloed: AI tooling, behavioral psychology, automation, SEO, systems architecture, monetization, and product thinking.</p>
           </article>
-          <article class="card">
-            <h3>Signal Map</h3>
-            <p>An interactive visualization of data streams styled like a space-age control panel.</p>
+          <article class="operator-card">
+            <h3>Optimization oriented</h3>
+            <p>I naturally think in terms of flow, friction, efficiency, conversion, speed, and return on effort.</p>
           </article>
-          <article class="card">
-            <h3>Orbit Portfolio</h3>
-            <p>A responsive showcase that pairs glassmorphism cards with colorful atmospheric gradients.</p>
+          <article class="operator-card">
+            <h3>Intellectual autonomy</h3>
+            <p>I challenge defaults, test assumptions independently, and rebuild frameworks from first principles when needed.</p>
+          </article>
+          <article class="operator-card">
+            <h3>Compression-driven communication</h3>
+            <p>I prefer concise structures, frameworks, directives, and modular playbooks over conversational sprawl.</p>
           </article>
         </div>
       </section>
 
-      <section class="section" id="skills" data-reveal>
-        <h2>Skills & Tech</h2>
-        <p>Design-forward engineering with a focus on smooth UX, frontend quality, and clean maintainable code.</p>
-        <div class="chip-grid" role="list" aria-label="Skills">
-          <span class="chip" role="listitem">HTML5</span>
-          <span class="chip" role="listitem">CSS3</span>
-          <span class="chip" role="listitem">JavaScript</span>
-          <span class="chip" role="listitem">GitHub Pages</span>
-          <span class="chip" role="listitem">Responsive UI</span>
-          <span class="chip" role="listitem">Accessibility</span>
+      <section class="section" id="friction" data-reveal>
+        <div class="section-header">
+          <div class="section-kicker">Tradeoffs</div>
+          <h2>Strengths create pressure somewhere else.</h2>
+        </div>
+        <div class="principles-grid">
+          <article class="operator-card">
+            <h3>High standards create friction</h3>
+            <p>Slow movement, vague communication, and low-precision thinking tend to create drag.</p>
+          </article>
+          <article class="operator-card">
+            <h3>Optimization has limits</h3>
+            <p>Systems minds can over-refine beyond diminishing returns if adoption friction is ignored.</p>
+          </article>
+          <article class="operator-card">
+            <h3>Delegation requires translation</h3>
+            <p>Lower-context thinkers often need systems compressed into simpler operational interfaces.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="stack" data-reveal>
+        <div class="section-header">
+          <div class="section-kicker">Domain stack</div>
+          <h2>The arenas I synthesize.</h2>
+        </div>
+        <div class="stack-grid" role="list" aria-label="Domains and capabilities">
+          <span class="chip" role="listitem">Systems Design</span>
+          <span class="chip" role="listitem">Automation</span>
+          <span class="chip" role="listitem">AI Leverage</span>
+          <span class="chip" role="listitem">SEO Strategy</span>
+          <span class="chip" role="listitem">Behavioral Psychology</span>
+          <span class="chip" role="listitem">Monetization Models</span>
+          <span class="chip" role="listitem">Product Thinking</span>
+          <span class="chip" role="listitem">Signal Detection</span>
+          <span class="chip" role="listitem">Pattern Recognition</span>
+          <span class="chip" role="listitem">Operator Frameworks</span>
         </div>
       </section>
 
       <section class="section" id="contact" data-reveal>
-        <h2>Contact</h2>
-        <p>
-          Want to collaborate on something imaginative? Let's build an experience that feels like the future we were
-          promised.
-        </p>
-        <div class="cta-row">
-          <a class="button primary" href="https://github.com/BlaZerStarZ">GitHub</a>
-          <a class="button secondary" href="https://github.com/BlaZerStarZ/BlaZerStarZ.github.io/issues">Open an Issue</a>
+        <div class="section-header">
+          <div class="section-kicker">Contact</div>
+          <h2>If the goal is leverage, clarity, and practical outcomes, let’s talk.</h2>
+        </div>
+        <div class="contact-grid">
+          <div>
+            <p>
+              I’m most useful in situations that need structure under ambiguity, better signal detection, stronger
+              positioning, or a more compounding operational model.
+            </p>
+            <ul class="contact-list">
+              <li>Build a sharper system</li>
+              <li>Find the real bottleneck</li>
+              <li>Turn scattered effort into an engine</li>
+            </ul>
+          </div>
+          <div class="cta-row">
+            <a class="button primary" href="https://github.com/BlaZerStarZ">GitHub</a>
+            <a class="button secondary" href="https://github.com/BlaZerStarZ/BlaZerStarZ.github.io/issues">Open an Issue</a>
+          </div>
         </div>
       </section>
     </main>
 
     <footer>
-      <small>© <span id="year"></span> BlaZerStarZ · Crafted in retro-futurist style.</small>
+      <small>© <span id="year"></span> BlaZerStarZ · Systems, leverage, and compounding advantage.</small>
     </footer>
 
     <script>
@@ -703,7 +1007,7 @@
               }
             });
           },
-          { threshold: 0.16 }
+          { threshold: 0.14 }
         );
 
         revealNodes.forEach((node) => observer.observe(node));
@@ -715,13 +1019,13 @@
         const brandStars = document.querySelectorAll(".brand-star");
 
         brandStars.forEach((star, index) => {
-          const spinDuration = (Math.random() * 2.8 + 3.2).toFixed(2);
-          const pulseDuration = (Math.random() * 1.4 + 2.2).toFixed(2);
-          const delay = (Math.random() * -2.5).toFixed(2);
+          const spinDuration = (Math.random() * 1.8 + 3.6).toFixed(2);
+          const pulseDuration = (Math.random() * 1.2 + 2.1).toFixed(2);
+          const delay = (Math.random() * -2.2).toFixed(2);
 
           star.style.setProperty("--spin-duration", `${spinDuration}s`);
           star.style.setProperty("--pulse-duration", `${pulseDuration}s`);
-          star.style.animationDelay = `${delay}s, ${delay}s, ${Number(delay) - index * 0.35}s`;
+          star.style.animationDelay = `${delay}s, ${delay}s, ${Number(delay) - index * 0.28}s`;
         });
       }
     </script>
