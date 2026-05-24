@@ -872,7 +872,7 @@
       </div>
     </header>
 
-    <main id="content" class="shell">
+    <main id="content" class="shell" tabindex="-1">
       <section class="hero" id="top">
         <div class="hero-layout">
           <div class="hero-copy" data-reveal>
@@ -1106,13 +1106,17 @@
     </main>
 
     <footer>
-      <small>© <span id="year"></span> BlaZerStarZ · Systems, leverage, and compounding advantage.</small>
+      <small>© <time id="year" datetime="2026">2026</time> BlaZerStarZ · Systems, leverage, and compounding advantage.</small>
     </footer>
 
     <script>
       const year = document.getElementById("year");
       if (year) {
-        year.textContent = String(new Date().getFullYear());
+        const currentYear = String(new Date().getFullYear());
+        year.textContent = currentYear;
+        if (year.tagName === "TIME") {
+          year.setAttribute("datetime", currentYear);
+        }
       }
 
       const revealNodes = document.querySelectorAll("[data-reveal]");
