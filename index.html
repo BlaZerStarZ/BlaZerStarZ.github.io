@@ -845,6 +845,307 @@
           filter: none;
         }
       }
+
+      /* ── Operating Model Walkthrough Modal ── */
+      .om-overlay {
+        display: none;
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        background: rgba(4, 5, 11, 0.8);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        align-items: flex-end;
+        justify-content: center;
+      }
+
+      .om-overlay.om-open {
+        display: flex;
+        animation: omFadeIn 0.28s ease;
+      }
+
+      @keyframes omFadeIn {
+        from { opacity: 0; }
+        to { opacity: 1; }
+      }
+
+      .om-sheet {
+        width: 100%;
+        max-width: 540px;
+        max-height: 90dvh;
+        max-height: 90vh;
+        background: linear-gradient(165deg, rgba(13, 16, 42, 0.98), rgba(6, 7, 18, 0.99));
+        border: 1px solid var(--line-strong);
+        border-bottom: none;
+        border-radius: 1.8rem 1.8rem 0 0;
+        padding: 1.5rem 1.4rem 2.4rem;
+        box-shadow: 0 -24px 80px rgba(0, 0, 0, 0.6), 0 -2px 0 rgba(255, 214, 107, 0.18);
+        overflow-y: auto;
+        -webkit-overflow-scrolling: touch;
+        position: relative;
+        animation: omSlideUp 0.44s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      @keyframes omSlideUp {
+        from { transform: translateY(100%); }
+        to { transform: translateY(0); }
+      }
+
+      .om-handle {
+        width: 42px;
+        height: 4px;
+        background: rgba(255, 255, 255, 0.16);
+        border-radius: 2px;
+        margin: 0 auto 1.5rem;
+      }
+
+      .om-topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 1.8rem;
+      }
+
+      .om-dots {
+        display: flex;
+        gap: 0.42rem;
+        align-items: center;
+      }
+
+      .om-dot {
+        height: 6px;
+        width: 6px;
+        border-radius: 3px;
+        background: rgba(255, 255, 255, 0.18);
+        transition: all 0.35s ease;
+        cursor: pointer;
+        border: none;
+        padding: 0;
+      }
+
+      .om-dot.om-dot-active {
+        width: 22px;
+        background: linear-gradient(90deg, var(--gold), var(--cyan));
+      }
+
+      .om-topbar-right {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+      }
+
+      .om-counter {
+        font-size: 0.75rem;
+        color: var(--muted);
+        letter-spacing: 0.1em;
+      }
+
+      .om-close {
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid var(--line);
+        color: var(--muted);
+        border-radius: 50%;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-size: 0.88rem;
+        transition: background 0.2s, color 0.2s;
+        padding: 0;
+        flex-shrink: 0;
+      }
+
+      .om-close:hover,
+      .om-close:focus-visible {
+        background: rgba(255, 255, 255, 0.14);
+        color: var(--text);
+      }
+
+      .om-step {
+        display: none;
+      }
+
+      .om-step.om-step-active {
+        display: block;
+      }
+
+      .om-step.om-step-active.om-anim-next {
+        animation: omStepIn 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      .om-step.om-step-active.om-anim-prev {
+        animation: omStepInPrev 0.38s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+
+      @keyframes omStepIn {
+        from { opacity: 0; transform: translateX(30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      @keyframes omStepInPrev {
+        from { opacity: 0; transform: translateX(-30px); }
+        to { opacity: 1; transform: translateX(0); }
+      }
+
+      .om-step-graphic {
+        margin-bottom: 1.2rem;
+      }
+
+      .om-step-kicker {
+        font-size: 0.72rem;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 0.45rem;
+      }
+
+      .om-step-title {
+        font-size: clamp(1.6rem, 7vw, 2.1rem);
+        font-weight: 800;
+        letter-spacing: -0.035em;
+        margin: 0 0 0.85rem;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        line-height: 1.08;
+      }
+
+      .om-step-title.om-c1 { background-image: linear-gradient(90deg, var(--white-gold), var(--gold)); }
+      .om-step-title.om-c2 { background-image: linear-gradient(90deg, var(--cyan), var(--violet)); }
+      .om-step-title.om-c3 { background-image: linear-gradient(90deg, var(--gold), var(--hot-pink)); }
+      .om-step-title.om-c4 { background-image: linear-gradient(90deg, var(--lime), var(--cyan)); }
+      .om-step-title.om-c5 { background-image: linear-gradient(90deg, var(--hot-pink), var(--white-gold)); }
+
+      .om-step-body {
+        color: var(--muted-strong);
+        line-height: 1.74;
+        margin: 0 0 1.2rem;
+        font-size: 0.97rem;
+      }
+
+      .om-tip-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        padding: 0.5rem 0.88rem;
+        border-radius: 0.65rem;
+        border: 1px solid rgba(139, 109, 255, 0.3);
+        background: rgba(139, 109, 255, 0.08);
+        color: rgba(190, 170, 255, 0.95);
+        font-size: 0.85rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-bottom: 0.8rem;
+        transition: background 0.2s, border-color 0.2s;
+      }
+
+      .om-tip-toggle:hover,
+      .om-tip-toggle:focus-visible {
+        background: rgba(139, 109, 255, 0.16);
+        border-color: rgba(139, 109, 255, 0.5);
+      }
+
+      .om-tip-toggle .om-tip-star { color: var(--gold); }
+
+      .om-tip-toggle .om-tip-chevron {
+        display: inline-block;
+        transition: transform 0.25s ease;
+        font-style: normal;
+      }
+
+      .om-tip-toggle[aria-expanded="true"] .om-tip-chevron {
+        transform: rotate(180deg);
+      }
+
+      .om-tip-content {
+        background: linear-gradient(135deg, rgba(139, 109, 255, 0.09), rgba(67, 231, 255, 0.06));
+        border: 1px solid rgba(139, 109, 255, 0.24);
+        border-radius: 0.9rem;
+        padding: 0.88rem 1rem;
+        margin-bottom: 1rem;
+        animation: omTipIn 0.28s ease;
+      }
+
+      @keyframes omTipIn {
+        from { opacity: 0; transform: translateY(-6px); }
+        to { opacity: 1; transform: translateY(0); }
+      }
+
+      .om-tip-content p {
+        margin: 0;
+        font-size: 0.9rem;
+        color: rgba(200, 182, 255, 0.95);
+        line-height: 1.68;
+      }
+
+      .om-final-cta {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        margin-top: 1.3rem;
+        min-height: 52px;
+        border-radius: 0.95rem;
+        background: linear-gradient(120deg, var(--gold), var(--white-gold) 24%, var(--hot-pink) 78%);
+        background-size: 200% 200%;
+        color: #08101c;
+        text-decoration: none;
+        font-weight: 800;
+        font-size: 1.02rem;
+        box-shadow: 0 10px 28px rgba(255, 214, 107, 0.26);
+        animation: button-primary-cycle 7s ease-in-out infinite;
+        transition: transform 0.2s;
+        border: none;
+        cursor: pointer;
+      }
+
+      .om-final-cta:hover,
+      .om-final-cta:focus-visible {
+        transform: translateY(-2px);
+      }
+
+      .om-nav {
+        display: flex;
+        gap: 0.72rem;
+        margin-top: 1.6rem;
+      }
+
+      .om-nav-btn {
+        flex: 1;
+        min-height: 50px;
+        border-radius: 0.9rem;
+        font-weight: 700;
+        font-size: 0.96rem;
+        cursor: pointer;
+        transition: background 0.2s, transform 0.2s, opacity 0.2s;
+        border: 1px solid var(--line-strong);
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--text);
+      }
+
+      .om-nav-btn:hover:not(:disabled),
+      .om-nav-btn:focus-visible:not(:disabled) {
+        background: rgba(255, 255, 255, 0.1);
+        transform: translateY(-1px);
+      }
+
+      .om-nav-btn:disabled {
+        opacity: 0.28;
+        cursor: default;
+      }
+
+      .om-nav-btn.om-next {
+        background: rgba(255, 214, 107, 0.1);
+        border-color: rgba(255, 214, 107, 0.3);
+        color: var(--white-gold);
+      }
+
+      .om-nav-btn.om-next:hover:not(:disabled),
+      .om-nav-btn.om-next:focus-visible:not(:disabled) {
+        background: rgba(255, 214, 107, 0.18);
+      }
     </style>
   </head>
   <body>
@@ -1109,6 +1410,113 @@
       <small>© <span id="year"></span> BlaZerStarZ · Systems, leverage, and compounding advantage.</small>
     </footer>
 
+    <!-- Operating Model Mobile Walkthrough -->
+    <div class="om-overlay" id="omOverlay" role="dialog" aria-modal="true" aria-label="Operating model walkthrough" aria-hidden="true">
+      <div class="om-sheet" id="omSheet">
+        <div class="om-handle" aria-hidden="true"></div>
+
+        <div class="om-topbar">
+          <div class="om-dots" role="tablist" aria-label="Walkthrough steps" id="omDots">
+            <button class="om-dot om-dot-active" role="tab" aria-selected="true" aria-label="Step 1" data-step="0"></button>
+            <button class="om-dot" role="tab" aria-selected="false" aria-label="Step 2" data-step="1"></button>
+            <button class="om-dot" role="tab" aria-selected="false" aria-label="Step 3" data-step="2"></button>
+            <button class="om-dot" role="tab" aria-selected="false" aria-label="Step 4" data-step="3"></button>
+            <button class="om-dot" role="tab" aria-selected="false" aria-label="Step 5" data-step="4"></button>
+          </div>
+          <div class="om-topbar-right">
+            <span class="om-counter" id="omCounter" aria-live="polite">1 / 5</span>
+            <button class="om-close" id="omClose" aria-label="Close walkthrough">✕</button>
+          </div>
+        </div>
+
+        <!-- Step 1: Diagnose -->
+        <div class="om-step om-step-active om-anim-next" data-index="0" role="tabpanel" aria-label="Step 1: Map the System">
+          <div class="om-step-graphic">
+            <span class="mini-graphic g-systems" aria-hidden="true"></span>
+          </div>
+          <div class="om-step-kicker">Step 1 · Diagnose</div>
+          <h2 class="om-step-title om-c1">Map the System</h2>
+          <p class="om-step-body">Before touching anything, I map the full system — incentives, bottlenecks, throughput, and constraints. Most people treat symptoms. I find the structure that's causing them.</p>
+          <button class="om-tip-toggle" aria-expanded="false" aria-controls="omTip0">
+            <span class="om-tip-star">✦</span> Operator insight <span class="om-tip-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="om-tip-content" id="omTip0" hidden>
+            <p>Every broken outcome has a structural cause. Once you see the mechanism producing the result, the fix becomes obvious — and durable. This is why I start by mapping, not acting.</p>
+          </div>
+        </div>
+
+        <!-- Step 2: Detect -->
+        <div class="om-step" data-index="1" role="tabpanel" aria-label="Step 2: Read the Signal" hidden>
+          <div class="om-step-graphic">
+            <span class="mini-graphic g-signals" aria-hidden="true"></span>
+          </div>
+          <div class="om-step-kicker">Step 2 · Detect</div>
+          <h2 class="om-step-title om-c2">Read the Signal</h2>
+          <p class="om-step-body">I scan for weak signals — hidden incentives, market shifts, directional edges — before they surface into consensus. By the time something looks obvious, the edge is already gone.</p>
+          <button class="om-tip-toggle" aria-expanded="false" aria-controls="omTip1">
+            <span class="om-tip-star">✦</span> Operator insight <span class="om-tip-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="om-tip-content" id="omTip1" hidden>
+            <p>The real opportunity always lives one layer below what everyone else is seeing. Speed of pattern detection is the actual competitive moat — not execution speed.</p>
+          </div>
+        </div>
+
+        <!-- Step 3: Leverage -->
+        <div class="om-step" data-index="2" role="tabpanel" aria-label="Step 3: Find the Lever" hidden>
+          <div class="om-step-graphic">
+            <span class="mini-graphic g-leverage" aria-hidden="true"></span>
+          </div>
+          <div class="om-step-kicker">Step 3 · Leverage</div>
+          <h2 class="om-step-title om-c3">Find the Lever</h2>
+          <p class="om-step-body">Not all inputs are equal. I identify the precise point where minimal intervention creates maximum, disproportionate output. One lever, moved correctly, shifts everything downstream.</p>
+          <button class="om-tip-toggle" aria-expanded="false" aria-controls="omTip2">
+            <span class="om-tip-star">✦</span> Operator insight <span class="om-tip-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="om-tip-content" id="omTip2" hidden>
+            <p>Leverage isn't about working harder — it's about finding the constraint that controls the entire system. Fix that single structural point and every downstream metric moves with it.</p>
+          </div>
+        </div>
+
+        <!-- Step 4: Build -->
+        <div class="om-step" data-index="3" role="tabpanel" aria-label="Step 4: Engineer the Engine" hidden>
+          <div class="om-step-graphic">
+            <span class="mini-graphic g-pattern" aria-hidden="true"></span>
+          </div>
+          <div class="om-step-kicker">Step 4 · Build</div>
+          <h2 class="om-step-title om-c4">Engineer the Engine</h2>
+          <p class="om-step-body">Tactics expire. Engines compound. I design reusable workflows, automation loops, and decision frameworks that produce value long after the initial build is complete.</p>
+          <button class="om-tip-toggle" aria-expanded="false" aria-controls="omTip3">
+            <span class="om-tip-star">✦</span> Operator insight <span class="om-tip-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="om-tip-content" id="omTip3" hidden>
+            <p>One well-built engine running at 70% capacity consistently outperforms ten ad-hoc tactics running flat-out for a week. I build for compounding, not sprints.</p>
+          </div>
+        </div>
+
+        <!-- Step 5: Execute -->
+        <div class="om-step" data-index="4" role="tabpanel" aria-label="Step 5: Operate with Precision" hidden>
+          <div class="om-step-graphic">
+            <span class="mini-graphic g-practical" aria-hidden="true"></span>
+          </div>
+          <div class="om-step-kicker">Step 5 · Execute</div>
+          <h2 class="om-step-title om-c5">Operate with Precision</h2>
+          <p class="om-step-body">I translate strategy into operational sequences with measurable, accountable outputs. Execution without a model is effort. Execution within a model is compounding advantage.</p>
+          <button class="om-tip-toggle" aria-expanded="false" aria-controls="omTip4">
+            <span class="om-tip-star">✦</span> Operator insight <span class="om-tip-chevron" aria-hidden="true">▾</span>
+          </button>
+          <div class="om-tip-content" id="omTip4" hidden>
+            <p>This is the model running underneath every project I engage with. If you want this clarity — this architecture — working for your situation, let's talk about what that looks like.</p>
+          </div>
+          <a class="om-final-cta" href="#contact" id="omCtaBtn">I want this for myself →</a>
+        </div>
+
+        <div class="om-nav">
+          <button class="om-nav-btn om-prev" id="omPrev" aria-label="Previous step" disabled>← Back</button>
+          <button class="om-nav-btn om-next" id="omNext" aria-label="Next step">Next →</button>
+        </div>
+      </div>
+    </div>
+
     <script>
       const year = document.getElementById("year");
       if (year) {
@@ -1137,6 +1545,152 @@
       } else {
         revealNodes.forEach((node) => node.classList.add("show"));
       }
+
+      // Operating Model Mobile Walkthrough
+      (function () {
+        var MOBILE_MAX = 768;
+        var overlay = document.getElementById("omOverlay");
+        var sheet = document.getElementById("omSheet");
+        var closeBtn = document.getElementById("omClose");
+        var prevBtn = document.getElementById("omPrev");
+        var nextBtn = document.getElementById("omNext");
+        var counterEl = document.getElementById("omCounter");
+        var ctaBtn = document.getElementById("omCtaBtn");
+        var triggerBtn = document.querySelector('a[href="#systems"].button.primary');
+
+        if (!overlay || !triggerBtn) return;
+
+        var steps = overlay.querySelectorAll(".om-step");
+        var dots = overlay.querySelectorAll(".om-dot");
+        var tipToggles = overlay.querySelectorAll(".om-tip-toggle");
+        var current = 0;
+        var touchStartX = 0;
+        var touchStartY = 0;
+        var lastFocusedEl = null;
+
+        function isMobile() {
+          return window.innerWidth <= MOBILE_MAX;
+        }
+
+        function showStep(idx, dir) {
+          steps.forEach(function (s, i) {
+            s.classList.remove("om-step-active", "om-anim-next", "om-anim-prev");
+            s.hidden = i !== idx;
+            if (i === idx) {
+              void s.offsetWidth; // force reflow so animation restarts
+              s.classList.add("om-step-active");
+              s.classList.add(dir === "prev" ? "om-anim-prev" : "om-anim-next");
+            }
+          });
+          dots.forEach(function (d, i) {
+            d.classList.toggle("om-dot-active", i === idx);
+            d.setAttribute("aria-selected", String(i === idx));
+          });
+          if (counterEl) counterEl.textContent = (idx + 1) + " / " + steps.length;
+          if (prevBtn) prevBtn.disabled = idx === 0;
+          if (nextBtn) nextBtn.disabled = idx === steps.length - 1;
+          current = idx;
+        }
+
+        function openModal() {
+          lastFocusedEl = document.activeElement;
+          current = 0;
+          // Reset all tip panels
+          tipToggles.forEach(function (t) {
+            t.setAttribute("aria-expanded", "false");
+            var panel = document.getElementById(t.getAttribute("aria-controls"));
+            if (panel) panel.hidden = true;
+          });
+          showStep(0, "next");
+          overlay.classList.add("om-open");
+          overlay.removeAttribute("aria-hidden");
+          document.body.style.overflow = "hidden";
+          setTimeout(function () {
+            if (closeBtn) closeBtn.focus();
+          }, 50);
+        }
+
+        function closeModal() {
+          overlay.classList.remove("om-open");
+          overlay.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+          if (lastFocusedEl) lastFocusedEl.focus();
+        }
+
+        // Trigger: intercept on mobile only
+        triggerBtn.addEventListener("click", function (e) {
+          if (isMobile()) {
+            e.preventDefault();
+            openModal();
+          }
+        });
+
+        // Close button
+        if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+        // Click outside sheet to close
+        overlay.addEventListener("click", function (e) {
+          if (e.target === overlay) closeModal();
+        });
+
+        // Escape key
+        document.addEventListener("keydown", function (e) {
+          if (e.key === "Escape" && overlay.classList.contains("om-open")) {
+            closeModal();
+          }
+        });
+
+        // Prev / Next navigation
+        if (prevBtn) prevBtn.addEventListener("click", function () {
+          if (current > 0) showStep(current - 1, "prev");
+        });
+        if (nextBtn) nextBtn.addEventListener("click", function () {
+          if (current < steps.length - 1) showStep(current + 1, "next");
+        });
+
+        // Dot navigation
+        dots.forEach(function (dot, i) {
+          dot.addEventListener("click", function () {
+            showStep(i, i > current ? "next" : "prev");
+          });
+        });
+
+        // Tip toggles
+        tipToggles.forEach(function (toggle) {
+          toggle.addEventListener("click", function () {
+            var expanded = this.getAttribute("aria-expanded") === "true";
+            this.setAttribute("aria-expanded", String(!expanded));
+            var panel = document.getElementById(this.getAttribute("aria-controls"));
+            if (panel) panel.hidden = expanded;
+          });
+        });
+
+        // CTA inside final step: close modal and proceed to #contact
+        if (ctaBtn) ctaBtn.addEventListener("click", function () {
+          closeModal();
+        });
+
+        // Touch swipe for step navigation
+        if (sheet) {
+          sheet.addEventListener("touchstart", function (e) {
+            touchStartX = e.touches[0].clientX;
+            touchStartY = e.touches[0].clientY;
+          }, { passive: true });
+
+          sheet.addEventListener("touchend", function (e) {
+            var dx = e.changedTouches[0].clientX - touchStartX;
+            var dy = e.changedTouches[0].clientY - touchStartY;
+            // Only treat as horizontal swipe if horizontal movement dominates
+            if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 48) {
+              if (dx < 0 && current < steps.length - 1) {
+                showStep(current + 1, "next");
+              } else if (dx > 0 && current > 0) {
+                showStep(current - 1, "prev");
+              }
+            }
+          }, { passive: true });
+        }
+      })();
     </script>
   </body>
 </html>
