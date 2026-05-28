@@ -447,6 +447,9 @@
         background: rgba(255, 255, 255, 0.03);
         position: relative;
         overflow: hidden;
+        transform: translateZ(0);
+        will-change: transform, filter;
+        animation: icon-float 3.4s ease-in-out infinite;
       }
 
       .mini-graphic::before,
@@ -656,10 +659,67 @@
         padding: 1.1rem;
       }
 
+      .principle {
+        position: relative;
+        overflow: hidden;
+        isolation: isolate;
+        transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+      }
+
+      .principle::before,
+      .principle::after {
+        content: "";
+        position: absolute;
+        pointer-events: none;
+        z-index: -1;
+      }
+
+      .principle::before {
+        width: clamp(170px, 32vw, 260px);
+        height: clamp(170px, 32vw, 260px);
+        border-radius: 50%;
+        top: -34%;
+        right: -24%;
+        background: radial-gradient(circle, rgba(255, 78, 99, 0.26) 0%, rgba(255, 214, 107, 0.13) 38%, transparent 72%);
+        filter: blur(2px);
+        animation: principle-orb-shift 7.4s ease-in-out infinite;
+      }
+
+      .principle::after {
+        width: 170%;
+        height: 130%;
+        left: -36%;
+        top: 40%;
+        background:
+          linear-gradient(108deg, transparent 0%, rgba(255, 78, 99, 0.16) 38%, rgba(255, 214, 107, 0.22) 50%, transparent 63%),
+          radial-gradient(ellipse at 60% 50%, rgba(67, 231, 255, 0.12), transparent 66%);
+        transform: rotate(-7deg);
+        animation: principle-wave-shift 6.8s ease-in-out infinite;
+      }
+
       .principle h3,
       .operator-card h3 {
         font-size: 1.05rem;
         margin-bottom: 0.55rem;
+      }
+
+      .principle h3 {
+        position: relative;
+        padding-bottom: 0.6rem;
+      }
+
+      .principle h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: min(88%, 210px);
+        height: 3px;
+        border-radius: 999px;
+        background: linear-gradient(90deg, rgba(255, 78, 99, 0.95), rgba(255, 214, 107, 0.95));
+        box-shadow: 0 0 12px rgba(255, 78, 99, 0.45), 0 0 18px rgba(255, 214, 107, 0.28);
+        transform-origin: left center;
+        animation: principle-header-line 3.1s ease-in-out infinite;
       }
 
       .principle p,
@@ -707,6 +767,28 @@
         font-size: 1.12rem;
         line-height: 1.75;
         color: var(--white-gold);
+      }
+
+      .principle:hover,
+      .principle:focus-within,
+      .principle.is-interacting {
+        transform: translateY(-5px);
+        border-color: rgba(255, 214, 107, 0.34);
+        box-shadow: 0 20px 44px rgba(0, 0, 0, 0.42), 0 0 26px rgba(255, 78, 99, 0.14);
+      }
+
+      .metric:hover .mini-graphic,
+      .signal-card:hover .mini-graphic,
+      .principle:hover .mini-graphic,
+      .operator-card:hover .mini-graphic,
+      .quote-card:hover .mini-graphic,
+      .metric.is-interacting .mini-graphic,
+      .signal-card.is-interacting .mini-graphic,
+      .principle.is-interacting .mini-graphic,
+      .operator-card.is-interacting .mini-graphic,
+      .quote-card.is-interacting .mini-graphic {
+        filter: drop-shadow(0 0 12px rgba(255, 214, 107, 0.42));
+        transform: translateY(-2px) scale(1.04);
       }
 
       .stack-grid {
@@ -788,6 +870,23 @@
         33% { width: 26px; }
         66% { width: 12px; }
       }
+      @keyframes icon-float {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-2px); }
+      }
+      @keyframes principle-orb-shift {
+        0%, 100% { transform: translate3d(0, 0, 0) scale(1); opacity: 0.86; }
+        35% { transform: translate3d(-10px, 12px, 0) scale(1.08); opacity: 1; }
+        70% { transform: translate3d(8px, -8px, 0) scale(0.95); opacity: 0.78; }
+      }
+      @keyframes principle-wave-shift {
+        0%, 100% { transform: rotate(-7deg) translate3d(0, 0, 0); opacity: 0.74; }
+        50% { transform: rotate(-2deg) translate3d(14px, -11px, 0); opacity: 1; }
+      }
+      @keyframes principle-header-line {
+        0%, 100% { transform: scaleX(0.66); opacity: 0.75; }
+        50% { transform: scaleX(1); opacity: 1; }
+      }
       @keyframes card-sheen { 0%,55%,100% { transform: translateX(-120%); } 75% { transform: translateX(120%); } }
 
       @media (max-width: 920px) {
@@ -810,6 +909,11 @@
 
         .metrics {
           grid-template-columns: 1fr;
+        }
+
+        .principle::before {
+          width: clamp(145px, 52vw, 220px);
+          height: clamp(145px, 52vw, 220px);
         }
       }
 
@@ -843,6 +947,10 @@
           text-shadow: 0 0 10px rgba(255, 214, 107, 0.4);
           transform: none;
           filter: none;
+        }
+
+        .principle {
+          transform: none !important;
         }
       }
 
@@ -1545,6 +1653,25 @@
       } else {
         revealNodes.forEach((node) => node.classList.add("show"));
       }
+
+      const interactiveCards = document.querySelectorAll(".metric, .signal-card, .principle, .operator-card, .quote-card");
+      interactiveCards.forEach((card) => {
+        let clearInteractiveTimer = null;
+
+        const markInteractive = () => {
+          card.classList.add("is-interacting");
+          if (clearInteractiveTimer) {
+            window.clearTimeout(clearInteractiveTimer);
+          }
+          clearInteractiveTimer = window.setTimeout(() => {
+            card.classList.remove("is-interacting");
+          }, 480);
+        };
+
+        card.addEventListener("pointerdown", markInteractive, { passive: true });
+        card.addEventListener("touchstart", markInteractive, { passive: true });
+        card.addEventListener("focusin", markInteractive);
+      });
 
       // Operating Model Mobile Walkthrough
       (function () {
