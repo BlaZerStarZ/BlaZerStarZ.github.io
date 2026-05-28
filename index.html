@@ -1659,9 +1659,7 @@
 
         const markInteractive = () => {
           card.classList.add("is-interacting");
-          if (interactionTimeout) {
-            window.clearTimeout(interactionTimeout);
-          }
+          window.clearTimeout(interactionTimeout);
           interactionTimeout = window.setTimeout(() => {
             card.classList.remove("is-interacting");
           }, 480);
