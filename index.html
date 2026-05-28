@@ -448,7 +448,6 @@
         position: relative;
         overflow: hidden;
         transform: translateZ(0);
-        will-change: transform, filter;
         animation: icon-float 3.4s ease-in-out infinite;
       }
 
@@ -663,7 +662,7 @@
         position: relative;
         overflow: hidden;
         isolation: isolate;
-        transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+        transition: transform 0.35s ease, border-color 0.35s ease;
       }
 
       .principle::before,
@@ -1656,20 +1655,19 @@
 
       const interactiveCards = document.querySelectorAll(".metric, .signal-card, .principle, .operator-card, .quote-card");
       interactiveCards.forEach((card) => {
-        let clearInteractiveTimer = null;
+        let interactionTimeout = null;
 
         const markInteractive = () => {
           card.classList.add("is-interacting");
-          if (clearInteractiveTimer) {
-            window.clearTimeout(clearInteractiveTimer);
+          if (interactionTimeout) {
+            window.clearTimeout(interactionTimeout);
           }
-          clearInteractiveTimer = window.setTimeout(() => {
+          interactionTimeout = window.setTimeout(() => {
             card.classList.remove("is-interacting");
           }, 480);
         };
 
         card.addEventListener("pointerdown", markInteractive, { passive: true });
-        card.addEventListener("touchstart", markInteractive, { passive: true });
         card.addEventListener("focusin", markInteractive);
       });
 
